@@ -17,6 +17,17 @@ class Autocomplete extends React.Component {
     this.handleQueryChange = this.handleQueryChange.bind(this)
   }
 
+  handleQueryChange(event){
+    console.log("handleQueryChange", event)
+    const query = event.target.value
+    this.setState({
+      query
+    })
+    if(query.length > 2){
+      actions.search(query)
+    }
+  }
+
   componentDidMount(){
     console.log('componentDidMount')
       this.removeListener = resultStore.addListener((state) => {
@@ -30,16 +41,7 @@ class Autocomplete extends React.Component {
     }
 
 
-    handleQueryChange(event){
-      console.log("handleQueryChange", event)
-      const query = event.target.value
-      this.setState({
-        query
-      })
-      if(query.length > 2){
-        actions.search(query)
-      }
-    }
+
 
     render() {
       debugger
