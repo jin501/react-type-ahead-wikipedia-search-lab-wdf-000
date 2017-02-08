@@ -4,8 +4,8 @@ const React = require('react');
 const actions = require('../actions');
 const resultStore = require('../stores/resultStore');
 
-const SearchField = require('./SearchField');
 const SearchResults = require('./SearchResults');
+const SearchField = require('./SearchField');
 
 class Autocomplete extends React.Component {
   constructor() {
