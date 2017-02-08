@@ -6,20 +6,30 @@ class Store {
     this.listeners = [];
   }
 
+  // ({state}) => {
+  //   this.setState({state})
   addListener(listener) {
-    // TODO
+    this.listeners.push(listener);
+   const removeListener = () => {
+     this.listeners = this.listeners.filter(l => listener !== l)
+   };
+   return removeListener
   }
-
+  // {
+  //   [{title:desc:}, {}],
+  //   updated: requested,
+  // }
   setState(state) {
     this.state = state;
     for (const listener of this.listeners) {
-      listener.call(this, state);
+      listener(state);
     }
   }
 
   getState() {
-    return this.state;
+    return this.state
   }
+
 }
 
 module.exports = Store;

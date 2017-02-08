@@ -8,18 +8,49 @@ const SearchField = require('./SearchField');
 const SearchResults = require('./SearchResults');
 
 class Autocomplete extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
+      results: resultStore.getState().results,
+      query: ''
     };
+    this.handleQueryChange = this.handleQueryChange.bind(this)
   }
-  render() {
-    return (
-      <div>
-        <h2>Autocomplete</h2>
-      </div>
-    );
-  }
-}
 
-module.exports = Autocomplete;
+  componentDidMount(){
+    console.log('componentDidMount')
+      this.removeListener = resultStore.addListener((state) => {
+        this.setState(state)
+      });
+    }
+
+
+    componentWillUnmount(){
+      this.removeListener();
+    }
+
+
+    handleQueryChange(event){
+      console.log("handleQueryChange", event)
+      const query = event.target.value
+      this.setState({
+        query
+      })
+      if(query.length > 2){
+        actions.search(query)
+      }
+    }
+
+    render() {
+      debugger
+      return (
+        <div className="autocomplete">
+          <h2>Autocomplete</h2>
+          <SearchField value={this.state.query} onChange={this.handleQueryChange}/>
+          <SearchResults results={this.state.results} />
+        </div>
+      );
+    }
+  }
+
+  module.exports = Autocomplete;
